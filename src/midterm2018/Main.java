@@ -109,8 +109,6 @@ public class Main {
             map.put(temp, (count == null) ? 1 : count + 1);
         }
         printMap(map);
-
-        System.out.println("\nMap排序-以key排序");
         Map treeMap = new TreeMap(map);
         printMap(treeMap);
 
