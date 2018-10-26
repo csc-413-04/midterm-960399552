@@ -1,4 +1,5 @@
 package midterm2018;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.List;
@@ -72,17 +73,28 @@ public class Main {
         // Question 4
         // return unique words
         int numOfUnique;
+        ArrayList<String> list = new ArrayList<>();
         String[] wordsWithPunctuation = question4and5.split(" ");
         Set<String> s = new HashSet<>();
 
-
         for (int i = 0; i < wordsWithPunctuation.length; i++) {
-            s.add(wordsWithPunctuation[i].toLowerCase());
+
+            String newWord = wordsWithPunctuation[i] ;
+            if (!(newWord.charAt(0) >= 'a' && newWord.charAt(0) <= 'z' || newWord.charAt(0) >= 'A' && newWord.charAt(0) <= 'Z')) {
+                newWord = newWord.substring(1, newWord.length());
+            }
+            if (!(newWord.charAt(newWord.length() - 1) >= 'a' && newWord.charAt(newWord.length() - 1) <= 'z' || newWord.charAt(newWord.length() - 1) >= 'A' && newWord.charAt(newWord.length() - 1) <= 'Z')) {
+                newWord = newWord.substring(0, wordsWithPunctuation[i].length() - 1);
+            }
+            //set all words to lowercase:
+            String lowerCase = newWord.toLowerCase();
+            s.add(lowerCase);
+            list.add(lowerCase);
         }
         numOfUnique = s.size();
 
         System.out.println("the number of unique is: " + numOfUnique);
-
+/*
         // Question 5
         // return 2nd most common word
         List list = new ArrayList();
@@ -101,24 +113,36 @@ public class Main {
                 }
             }
         }
+*/
 
-        /*Map map = new HashMap();
 
-        for (String temp : list) {
-            int count = map.get(temp);
-            map.put(temp, (count == null) ? 1 : count + 1);
+//-----------------------------------
+        ArrayList<Integer> counter = new ArrayList<>();
+
+        HashMap<Integer,String> cm = new HashMap<>();
+
+        for (String temp : s) {
+            counter.add( Collections.frequency(list, temp));
+            cm.put(Collections.frequency(list, temp),temp);
+
         }
-        printMap(map);
-        Map treeMap = new TreeMap(map);
-        printMap(treeMap);
+        int largest = 0;
+        for(int j : counter){
+            if(largest<j){
+                largest = j;
+            }
+        }
 
+        cm.remove(largest);
+        largest =0;
+        for(int j : counter){
+            if(largest<j){
+                largest = j;
+            }
+        }
+
+        System.out.println();
+        System.out.println(cm.get(largest));
     }
 
-    public static void printMap(Map map) {
-        for (Map.Entry entry : map.entrySet()) {
-            System.out.println("Key-value : " + entry.getKey() + "- "
-                    + entry.getValue());
-        }
-    }*/
-    }
 }
